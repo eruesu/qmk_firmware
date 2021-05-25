@@ -169,6 +169,24 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     return true;
 };
 
+/**
+ * Combos
+ */
+enum combos {
+  JK_ESC
+};
+
+const uint16_t PROGMEM jk_combo[] = {KC_J, KC_K, COMBO_END};
+
+combo_t key_combos[COMBO_COUNT] = {
+  [JK_ESC] = COMBO(jk_combo, KC_ESC)
+};
+
+
+/**
+ * Fun
+ */
+
 bool muse_mode = false;
 uint8_t last_muse_note = 0;
 uint16_t muse_counter = 0;
