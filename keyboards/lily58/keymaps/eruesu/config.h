@@ -27,7 +27,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 // #define EE_HANDS
 
 #define TAPPING_FORCE_HOLD
-#define TAPPING_TERM 100
+#define TAPPING_TERM 125
+
+#define COMBO_COUNT 1           // Number of registered combos
+#define COMBO_TERM 125          // Timeout for combos to be detected
 
 #undef RGBLED_NUM
 #define RGBLIGHT_ANIMATIONS
