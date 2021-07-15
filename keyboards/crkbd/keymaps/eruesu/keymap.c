@@ -172,3 +172,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
   return true;
 }
 #endif // OLED_DRIVER_ENABLE
+
+#ifdef RGBLIGHT_ENABLE
+
+void keyboard_post_init_user(void) {
+  rgblight_enable_noeeprom();                    // Enables RGB, without saving settings
+  rgblight_sethsv_noeeprom(251, 97, 48);         // Dark purple
+  rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+}
+
+#endif // RGBLIGHT_ENABLE
