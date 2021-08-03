@@ -36,6 +36,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define COMBO_COUNT 1           // Number of registered combos
 #define COMBO_TERM 125          // Timeout for combos to be detected
 
+#define EXTRAKEY_ENABLE         // for volume / system controls
+
 #ifdef RGBLIGHT_ENABLE
     #undef RGBLED_NUM
     #define RGBLIGHT_EFFECT_STATIC_GRADIENT
