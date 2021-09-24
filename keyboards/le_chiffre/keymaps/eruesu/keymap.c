@@ -22,14 +22,7 @@ enum layers{
   _ADJUST
 };
 
-enum combo_events {
-  COMBO_BSPC,
-  COMBO_NUMBAK,
-  COMBO_TAB,
-  COMBO_ESC,
-  COMBO_DEL,
-};
-
+// Layer + Space
 #define KC_SPC_LWR LT(_LOWER, KC_SPC)
 #define KC_SPC_RSE LT(_RAISE, KC_SPC)
 #define KC_GA LGUI_T(KC_A)
@@ -87,19 +80,30 @@ void encoder_update_user(uint8_t index, bool clockwise) {
 }
 
 #ifdef COMBO_ENABLE
-const uint16_t PROGMEM combo_bspc[] = {KC_O, KC_P, COMBO_END};
-const uint16_t PROGMEM combo_numbak[] = {KC_0, KC_9, COMBO_END};
+
+enum combo_events {
+  COMBO_BSLASH,
+  COMBO_QUOT,
+  COMBO_ESC,
+  COMBO_TAB,
+  COMBO_ENT,
+  COMBO_GRV,
+};
+
+const uint16_t PROGMEM combo_bslash[] = {KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM combo_quot[] = {KC_L, KC_SCLN, COMBO_END};
 const uint16_t PROGMEM combo_tab[] = {KC_Q, KC_W, COMBO_END};
-const uint16_t PROGMEM combo_esc[] = {KC_E, KC_W, COMBO_END};
-const uint16_t PROGMEM combo_del[] = {KC_MINS, KC_EQL, COMBO_END};
+const uint16_t PROGMEM combo_esc[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM combo_ent[] = {KC_DOT, KC_SLSH, COMBO_END};
+const uint16_t PROGMEM combo_grv[] = {KC_1, KC_2, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
-  [COMBO_BSPC] = COMBO(combo_bspc,KC_BSPC),
-  [COMBO_NUMBAK] = COMBO(combo_numbak,KC_BSPC),
-  [COMBO_TAB] = COMBO(combo_tab,KC_TAB),
-  [COMBO_ESC] = COMBO(combo_esc,KC_ESC),
-  [COMBO_DEL] = COMBO(combo_del,KC_DEL),
-
+  [COMBO_BSLASH] =      COMBO(combo_bslash, KC_BSLASH),
+  [COMBO_QUOT] =        COMBO(combo_quot, KC_QUOT),
+  [COMBO_ESC] =         COMBO(combo_esc, KC_ESC),
+  [COMBO_TAB] =         COMBO(combo_tab, KC_TAB),
+  [COMBO_ENT] =         COMBO(combo_ent, KC_ENT),
+  [COMBO_GRV] =         COMBO(combo_grv, KC_GRV),
 };
 #endif
 
