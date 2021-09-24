@@ -15,7 +15,9 @@
  */
 #pragma once
 
-#define IGNORE_MOD_TAP_INTERRUPT //helps with homerow mods
-
 #define COMBO_COUNT 5
-#define COMBO_TERM 30
+#define COMBO_TERM 100
+
+#define TAPPING_FORCE_HOLD
+#define TAPPING_TERM 100
+
