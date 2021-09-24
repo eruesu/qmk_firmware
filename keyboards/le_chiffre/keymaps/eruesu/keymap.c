@@ -23,7 +23,7 @@ enum layers{
 };
 
 // Layer + Space
-#define KC_SPC_LWR LT(_LOWER, KC_SPC)
+#define KC_ENT_LWR LT(_LOWER, KC_ENT)
 #define KC_SPC_RSE LT(_RAISE, KC_SPC)
 #define KC_GA LGUI_T(KC_A)
 #define KC_AS LALT_T(KC_S)
@@ -37,9 +37,9 @@ enum layers{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT(
     KC_Q,           KC_W,   KC_E,   KC_R,   KC_T,  KC_MPLY,  KC_Y,   KC_U,    KC_I,   KC_O,     KC_P,
-    KC_GA,          KC_AS,  KC_CD,  KC_SF,   KC_G,            KC_H,  KC_SJ,   KC_CK,  KC_AL, KC_GSCLN,
+    LCTL_T(KC_A),   KC_S,  KC_D,  KC_F,   KC_G,            KC_H,  KC_J,   KC_K,  KC_L, KC_SCLN,
     LSFT_T(KC_Z),   KC_X,   KC_C,   KC_V,   KC_B,            KC_N,   KC_M, KC_COMM, KC_DOT,  RSFT_T(KC_SLSH),
-                      KC_RGUI, KC_SPC_LWR,            KC_SPC_RSE, KC_RALT
+                      KC_RGUI, KC_ENT_LWR,            KC_SPC_RSE, KC_RALT
   ),
 
   [_LOWER] = LAYOUT(
@@ -52,7 +52,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_RAISE] = LAYOUT(
       _______,  _______,  _______,  _______,  _______, _______,   _______,  KC_MINS,    KC_EQL,  KC_LBRC, KC_RBRC,
       _______,  _______,  _______,  _______,  _______,           KC_LEFT,  KC_DOWN,  KC_UP,  KC_RIGHT,   KC_BSPC,
-      _______,  _______,  _______,  _______,  _______,           _______,  _______,  _______,   _______,  _______,
+      _______,  _______,  _______,  _______,  _______,           _______,  _______,  _______,   _______,  KC_ENT,
                                     _______,  _______,           _______,  _______
   ),
 
@@ -79,22 +79,20 @@ void encoder_update_user(uint8_t index, bool clockwise) {
     }
 }
 
-#ifdef COMBO_ENABLE
-
 enum combo_events {
   COMBO_BSLASH,
   COMBO_QUOT,
   COMBO_ESC,
   COMBO_TAB,
-  COMBO_ENT,
   COMBO_GRV,
 };
+
+#ifdef COMBO_ENABLE
 
 const uint16_t PROGMEM combo_bslash[] = {KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM combo_quot[] = {KC_L, KC_SCLN, COMBO_END};
 const uint16_t PROGMEM combo_tab[] = {KC_Q, KC_W, COMBO_END};
 const uint16_t PROGMEM combo_esc[] = {KC_J, KC_K, COMBO_END};
-const uint16_t PROGMEM combo_ent[] = {KC_DOT, KC_SLSH, COMBO_END};
 const uint16_t PROGMEM combo_grv[] = {KC_1, KC_2, COMBO_END};
 
 combo_t key_combos[COMBO_COUNT] = {
@@ -102,7 +100,6 @@ combo_t key_combos[COMBO_COUNT] = {
   [COMBO_QUOT] =        COMBO(combo_quot, KC_QUOT),
   [COMBO_ESC] =         COMBO(combo_esc, KC_ESC),
   [COMBO_TAB] =         COMBO(combo_tab, KC_TAB),
-  [COMBO_ENT] =         COMBO(combo_ent, KC_ENT),
   [COMBO_GRV] =         COMBO(combo_grv, KC_GRV),
 };
 #endif
