@@ -49,17 +49,17 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_LOWER] = LAYOUT(
-        KC_1,  KC_2,     KC_3,     KC_4,      KC_5,  KC_TRNS,     KC_6,     KC_7,     KC_8,     KC_9,     KC_0,
-    KC_EXLM,  KC_AT,  KC_HASH,   KC_DLR,   KC_PERC,            KC_CIRC,  KC_AMPR,  KC_ASTR, KC_EQUAL,  KC_MINS,
-    KC_BSLS,KC_LCBR,  KC_LBRC,  KC_LPRN,   KC_UNDS,            KC_RPRN,  KC_RBRC,  KC_RCBR,   KC_DOT,   KC_GRV,
-                                KC_CAPS,   KC_TRNS,            KC_TRNS,  KC_TRNS
+      KC_1,     KC_2,     KC_3,     KC_4,     KC_5,    _______,  KC_6,     KC_7,     KC_8,     KC_9,     KC_0,
+      _______,  _______,  _______,  _______,  _______,           KC_LEFT,  KC_DOWN,  KC_UP,  KC_RIGHT,   _______,
+      _______,  _______,  _______,  _______,  _______,           _______,  _______,  _______,   _______,  _______,
+                                    _______,  _______,           _______,  _______
   ),
 
   [_RAISE] = LAYOUT(
-      RESET,  _______,  AG_NORM,  AG_SWAP,  DEBUG, KC_TRNS,   KC_GRV,  KC_PGDN,    KC_UP,  KC_PGUP,  KC_SCLN,
-    RGB_TOG,  RGB_HUI,  RGB_SAI,  RGB_VAI,  KC_NO,           KC_HOME,  KC_LEFT,  KC_DOWN,  KC_RGHT,   KC_END,
-    RGB_MOD,  RGB_HUD,  RGB_SAD,  RGB_VAD,  KC_NO,           KC_MINS,    KC_RO,  KC_COMM,   KC_DOT,  KC_BSLS,
-                                  KC_TRNS,KC_TRNS,           KC_TRNS,  KC_TRNS
+      _______,  _______,  _______,  _______,  _______, _______,   _______,  KC_MINS,    KC_EQL,  KC_LBRC, KC_RBRC,
+      _______,  _______,  _______,  _______,  _______,           KC_LEFT,  KC_DOWN,  KC_UP,  KC_RIGHT,   _______,
+      _______,  _______,  _______,  _______,  _______,           _______,  _______,  _______,   _______,  _______,
+                                    _______,  _______,           _______,  _______
   ),
 };
 
