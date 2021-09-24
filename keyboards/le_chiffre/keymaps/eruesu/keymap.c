@@ -18,7 +18,8 @@
 enum layers{
   _BASE,
   _LOWER,
-  _RAISE
+  _RAISE,
+  _ADJUST
 };
 
 enum combo_events {
@@ -57,11 +58,23 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
 
   [_RAISE] = LAYOUT(
       _______,  _______,  _______,  _______,  _______, _______,   _______,  KC_MINS,    KC_EQL,  KC_LBRC, KC_RBRC,
-      _______,  _______,  _______,  _______,  _______,           KC_LEFT,  KC_DOWN,  KC_UP,  KC_RIGHT,   _______,
+      _______,  _______,  _______,  _______,  _______,           KC_LEFT,  KC_DOWN,  KC_UP,  KC_RIGHT,   KC_BSPC,
+      _______,  _______,  _______,  _______,  _______,           _______,  _______,  _______,   _______,  _______,
+                                    _______,  _______,           _______,  _______
+  ),
+
+  [_ADJUST] = LAYOUT(
+      _______,  _______,  _______,  _______,  _______, _______,  _______,  _______,  _______,   _______,  _______,
+      _______,  _______,  _______,  _______,  _______,           _______,  _______,  _______,   _______,  _______,
       _______,  _______,  _______,  _______,  _______,           _______,  _______,  _______,   _______,  _______,
                                     _______,  _______,           _______,  _______
   ),
 };
+
+// ADJUST Tri-state Layer
+layer_state_t layer_state_set_user(layer_state_t state) {
+   return update_tri_layer_state(state, _LOWER, _RAISE, _ADJUST);
+}
 
 void encoder_update_user(uint8_t index, bool clockwise) {
     if (index == 0) {
@@ -120,6 +133,9 @@ static void render_layer_status(void) {
             break;
         case _RAISE:
             oled_write_ln_P(PSTR("RISE"), false);
+            break;
+        case _ADJUST:
+            oled_write_ln_P(PSTR("ADJT"), false);
             break;
         default:
             oled_write_ln_P(PSTR("?????"), false);
