@@ -23,7 +23,7 @@ enum layers{
 };
 
 // Layer + Space
-#define KC_ENT_LWR LT(_LOWER, KC_ENT)
+#define KC_SPC_LWR LT(_LOWER, KC_TAB)
 #define KC_SPC_RSE LT(_RAISE, KC_SPC)
 #define KC_GA LGUI_T(KC_A)
 #define KC_AS LALT_T(KC_S)
@@ -39,28 +39,28 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     KC_Q,           KC_W,   KC_E,   KC_R,   KC_T,  KC_MPLY,  KC_Y,   KC_U,    KC_I,   KC_O,     KC_P,
     LCTL_T(KC_A),   KC_S,  KC_D,  KC_F,   KC_G,            KC_H,  KC_J,   KC_K,  KC_L, KC_SCLN,
     LSFT_T(KC_Z),   KC_X,   KC_C,   KC_V,   KC_B,            KC_N,   KC_M, KC_COMM, KC_DOT,  RSFT_T(KC_SLSH),
-                      KC_RGUI, KC_ENT_LWR,            KC_SPC_RSE, KC_RALT
+                      KC_RGUI, KC_SPC_LWR,            KC_SPC_RSE, KC_RALT
   ),
 
   [_LOWER] = LAYOUT(
       KC_1,     KC_2,     KC_3,     KC_4,     KC_5,    _______,  KC_6,     KC_7,     KC_8,     KC_9,     KC_0,
-      _______,  _______,  _______,  _______,  _______,           KC_LEFT,  KC_DOWN,  KC_UP,  KC_RIGHT,   _______,
+      KC_TAB,  _______,  _______,  _______,  _______,           KC_LEFT,  KC_DOWN,  KC_UP,  KC_RIGHT,   _______,
       _______,  _______,  _______,  _______,  _______,           _______,  _______,  _______,   _______,  _______,
-                                    _______,  _______,           _______,  _______
+                      KC_RGUI, KC_SPC_LWR,            KC_SPC_RSE, KC_RALT
   ),
 
   [_RAISE] = LAYOUT(
-      _______,  _______,  _______,  _______,  _______, _______,   _______,  KC_MINS,    KC_EQL,  KC_LBRC, KC_RBRC,
-      _______,  _______,  _______,  _______,  _______,           KC_LEFT,  KC_DOWN,  KC_UP,  KC_RIGHT,   KC_BSPC,
+      KC_GRV,  _______,  _______,  _______,  _______, _______,   _______,  KC_MINS,    KC_EQL,  KC_LBRC, KC_RBRC,
+      KC_TAB,  _______,  _______,  _______,  _______,           KC_LEFT,  KC_DOWN,  KC_UP,  KC_RIGHT,   KC_BSPC,
       _______,  _______,  _______,  _______,  _______,           _______,  _______,  _______,   _______,  KC_ENT,
-                                    _______,  _______,           _______,  _______
+                      KC_RGUI, KC_SPC_LWR,            KC_SPC_RSE, KC_RALT
   ),
 
   [_ADJUST] = LAYOUT(
-      _______,  _______,  _______,  _______,  _______, _______,  _______,  _______,  _______,   _______,  _______,
-      _______,  _______,  _______,  _______,  _______,           _______,  _______,  _______,   _______,  _______,
-      _______,  _______,  _______,  _______,  _______,           _______,  _______,  _______,   _______,  _______,
-                                    _______,  _______,           _______,  _______
+      _______,  _______,  _______,  _______,  _______, _______,  _______,  KC_MS_WH_UP,  KC_MS_WH_DOWN,   _______,  _______,
+      _______,  _______,  _______,  _______,  _______,           KC_MS_LEFT, KC_MS_DOWN, KC_MS_UP, KC_MS_RIGHT,  _______,
+      _______,  _______,  _______,  _______,  _______,           _______,  KC_MS_BTN1,  KC_MS_BTN2,   _______,  _______,
+                      KC_RGUI, KC_SPC_LWR,            KC_SPC_RSE, KC_RALT
   ),
 };
 
@@ -84,6 +84,7 @@ enum combo_events {
   COMBO_QUOT,
   COMBO_ESC,
   COMBO_TAB,
+  COMBO_TAB_HOME,
   COMBO_GRV,
 };
 
@@ -92,6 +93,7 @@ enum combo_events {
 const uint16_t PROGMEM combo_bslash[] = {KC_O, KC_P, COMBO_END};
 const uint16_t PROGMEM combo_quot[] = {KC_L, KC_SCLN, COMBO_END};
 const uint16_t PROGMEM combo_tab[] = {KC_Q, KC_W, COMBO_END};
+const uint16_t PROGMEM combo_tab_home[] = {KC_F, KC_D, COMBO_END};
 const uint16_t PROGMEM combo_esc[] = {KC_J, KC_K, COMBO_END};
 const uint16_t PROGMEM combo_grv[] = {KC_1, KC_2, COMBO_END};
 
@@ -100,9 +102,23 @@ combo_t key_combos[COMBO_COUNT] = {
   [COMBO_QUOT] =        COMBO(combo_quot, KC_QUOT),
   [COMBO_ESC] =         COMBO(combo_esc, KC_ESC),
   [COMBO_TAB] =         COMBO(combo_tab, KC_TAB),
+  [COMBO_TAB_HOME] =    COMBO(combo_tab_home, KC_TAB),
   [COMBO_GRV] =         COMBO(combo_grv, KC_GRV),
 };
+
+uint16_t get_combo_term(uint16_t index, combo_t *combo) {
+  switch (index) {
+    case COMBO_ESC:
+    case COMBO_TAB_HOME:
+      return 150;
+    default:
+      return COMBO_TERM;
+  }
+}
+
 #endif
+
+
 
 #ifdef OLED_DRIVER_ENABLE  //Special thanks to Sickbabies for this great OLED widget!
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
@@ -217,4 +233,5 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
     }
     return true;
   }
+
 #endif
