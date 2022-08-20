@@ -22,6 +22,12 @@ enum layers{
   _ADJUST
 };
 
+enum keycodes {
+  KC_USR_CMD_TAB = SAFE_RANGE,
+  KC_USR_CMD_SHIFT_TAB,
+};
+
+
 // Layer + Space
 #define KC_SPC_LWR LT(_LOWER, KC_TAB)
 #define KC_SPC_RSE LT(_RAISE, KC_SPC)
@@ -37,14 +43,14 @@ enum layers{
 const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   [_BASE] = LAYOUT(
     KC_Q,           KC_W,   KC_E,   KC_R,   KC_T,  KC_MPLY,  KC_Y,   KC_U,    KC_I,   KC_O,     KC_P,
-    LCTL_T(KC_A),   KC_S,  KC_D,  KC_F,   KC_G,            KC_H,  KC_J,   KC_K,  KC_L, KC_SCLN,
+    LCTL_T(KC_A),   KC_S,  KC_D,  KC_F,   KC_G,              KC_H,  KC_J,   KC_K,   KC_L,    RCTL_T(KC_SCLN),
     LSFT_T(KC_Z),   KC_X,   KC_C,   KC_V,   KC_B,            KC_N,   KC_M, KC_COMM, KC_DOT,  RSFT_T(KC_SLSH),
                       KC_RGUI, KC_SPC_LWR,            KC_SPC_RSE, KC_RALT
   ),
 
   [_LOWER] = LAYOUT(
       KC_1,     KC_2,     KC_3,     KC_4,     KC_5,    _______,  KC_6,     KC_7,     KC_8,     KC_9,     KC_0,
-      KC_TAB,  _______,  _______,  _______,  _______,           KC_LEFT,  KC_DOWN,  KC_UP,  KC_RIGHT,   _______,
+      KC_TAB,  _______,  KC_USR_CMD_SHIFT_TAB,  KC_USR_CMD_TAB,  _______,           KC_LEFT,  KC_DOWN,  KC_UP,  KC_RIGHT,   _______,
       _______,  _______,  _______,  _______,  _______,           _______,  _______,  _______,   _______,  _______,
                       KC_RGUI, KC_SPC_LWR,            KC_SPC_RSE, KC_RALT
   ),
@@ -53,7 +59,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
       KC_GRV,  _______,  _______,  _______,  _______, _______,   _______,  KC_MINS,    KC_EQL,  KC_LBRC, KC_RBRC,
       KC_TAB,  _______,  _______,  _______,  _______,           KC_LEFT,  KC_DOWN,  KC_UP,  KC_RIGHT,   KC_BSPC,
       _______,  _______,  _______,  _______,  _______,           _______,  _______,  _______,   _______,  KC_ENT,
-                      KC_RGUI, KC_SPC_LWR,            KC_SPC_RSE, KC_RALT
+                                  KC_RGUI, KC_SPC_LWR,            KC_SPC_RSE, KC_RALT
   ),
 
   [_ADJUST] = LAYOUT(
@@ -217,11 +223,26 @@ void oled_task_user(void) {
 	render_keylogger_status();
 }
 
+#endif
+
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
-    if (record->event.pressed) {
-      add_keylog(keycode);
+
+#ifdef OLED_DRIVER_ENABLE  //Special thanks to Sickbabies for this great OLED widget!
+  if (record->event.pressed) {
+    add_keylog(keycode);
+  }
+#endif
+
+  if (record->event.pressed) {
+    switch (keycode) {
+      case KC_USR_CMD_TAB:
+        SEND_STRING(SS_RGUI(SS_TAP(X_TAB)));
+        break;
+      case KC_USR_CMD_SHIFT_TAB:
+        SEND_STRING(SS_RGUI(SS_LSFT(SS_TAP(X_TAB))));
+        break;
     }
-    return true;
   }
 
-#endif
+  return true;
+}
