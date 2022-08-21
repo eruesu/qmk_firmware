@@ -21,8 +21,7 @@
 #define COMBO_TERM 50 // small by default - but overridden in get_combo_term for "jk"
 #define COMBO_TERM_PER_COMBO
 
-#define TAPPING_FORCE_HOLD
-#define TAPPING_TERM 125
+#define TAPPING_TERM 100
 
 #define IGNORE_MOD_TAP_INTERRUPT
 #define MOUSEKEY_DELAY 0
