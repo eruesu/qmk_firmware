@@ -29,7 +29,7 @@ enum keycodes {
 
 
 // Layer + Space
-#define KC_SPC_LWR LT(_LOWER, KC_TAB)
+#define KC_SPC_LWR LT(_LOWER, KC_SPC)
 #define KC_SPC_RSE LT(_RAISE, KC_SPC)
 #define KC_GA LGUI_T(KC_A)
 #define KC_AS LALT_T(KC_S)
