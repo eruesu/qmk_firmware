@@ -21,12 +21,15 @@
 #define COMBO_TERM 50 // small by default - but overridden in get_combo_term for "jk"
 #define COMBO_TERM_PER_COMBO
 
-#define TAPPING_TERM 100
+#define TAPPING_TERM 125
 
+#define PERMISSIVE_HOLD
 #define IGNORE_MOD_TAP_INTERRUPT
 #define MOUSEKEY_DELAY 0
 #define MOUSEKEY_INTERVAL       16
 #define MOUSEKEY_MAX_SPEED      6
 #define MOUSEKEY_TIME_TO_MAX    64
 #define MOUSEKEY_WHEEL_DELAY 0
+
+#define RGBLIGHT_LIMIT_VAL 150
 

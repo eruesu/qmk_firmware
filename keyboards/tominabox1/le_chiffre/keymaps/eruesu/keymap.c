@@ -63,9 +63,9 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   ),
 
   [_ADJUST] = LAYOUT(
-      _______,  _______,  _______,  _______,  _______, _______,  _______,  KC_MS_WH_UP,  KC_MS_WH_DOWN,   _______,  _______,
-      _______,  _______,  _______,  _______,  _______,           KC_MS_LEFT, KC_MS_DOWN, KC_MS_UP, KC_MS_RIGHT,  _______,
-      _______,  _______,  _______,  _______,  _______,           _______,  KC_MS_BTN1,  KC_MS_BTN2,   _______,  _______,
+      _______,  _______,  _______,  _______,  _______, _______,  _______,  KC_MS_WH_UP,  KC_MS_WH_DOWN,   _______,  RGB_TOG,
+      _______,  _______,  _______,  _______,  _______,           KC_MS_LEFT, KC_MS_DOWN, KC_MS_UP, KC_MS_RIGHT,  RGB_MODE_FORWARD,
+      _______,  _______,  _______,  _______,  _______,           _______,  KC_MS_BTN1,  KC_MS_BTN2,   _______,  RGB_MODE_REVERSE,
                       KC_RGUI, KC_SPC_LWR,            KC_SPC_RSE, KC_RALT
   ),
 };
@@ -87,7 +87,7 @@ enum combo_events {
 #ifdef COMBO_ENABLE
 
 const uint16_t PROGMEM combo_bslash[] = {KC_O, KC_P, COMBO_END};
-const uint16_t PROGMEM combo_quot[] = {KC_L, KC_SCLN, COMBO_END};
+const uint16_t PROGMEM combo_quot[] = {KC_L, RCTL_T(KC_SCLN), COMBO_END};
 const uint16_t PROGMEM combo_tab[] = {KC_Q, KC_W, COMBO_END};
 const uint16_t PROGMEM combo_tab_home[] = {KC_F, KC_D, COMBO_END};
 const uint16_t PROGMEM combo_esc[] = {KC_J, KC_K, COMBO_END};
@@ -114,7 +114,13 @@ uint16_t get_combo_term(uint16_t index, combo_t *combo) {
 
 #endif
 
-
+#ifdef RGBLIGHT_ENABLE
+void keyboard_post_init_user(void) {
+  rgblight_enable_noeeprom(); // Enables RGB, without saving settings
+  rgblight_sethsv_noeeprom(HSV_PURPLE);
+  rgblight_mode_noeeprom(RGBLIGHT_MODE_STATIC_LIGHT);
+}
+#endif
 
 #ifdef OLED_DRIVER_ENABLE  //Special thanks to Sickbabies for this great OLED widget!
 oled_rotation_t oled_init_user(oled_rotation_t rotation) {
