@@ -15,16 +15,15 @@
  */
 #pragma once
 
-#define PERMISSIVE_HOLD
-
 #define COMBO_COUNT 6
 #define COMBO_TERM 50 // small by default - but overridden in get_combo_term for "jk"
 #define COMBO_TERM_PER_COMBO
 
-#define TAPPING_TERM 125
+#define TAPPING_TERM_PER_KEY
+#define RETRO_TAPPING_PER_KEY
 
 #define PERMISSIVE_HOLD
-#define IGNORE_MOD_TAP_INTERRUPT
+
 #define MOUSEKEY_DELAY 0
 #define MOUSEKEY_INTERVAL       16
 #define MOUSEKEY_MAX_SPEED      6
