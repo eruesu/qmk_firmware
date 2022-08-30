@@ -99,9 +99,8 @@ bool get_retro_tapping(uint16_t keycode, keyrecord_t *record) {
       case KC_CTL_SCLN:
       case KC_SFT_Z:
       case KC_SFT_SLSH:
-        return true;
       default:
-        return false;
+        return true;
     }
 }
 
