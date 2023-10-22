@@ -37,26 +37,58 @@ enum totem_layers {
 // │ d e f i n e   m a c r o n a m e s               │
 // └─────────────────────────────────────────────────┘
 
-// LAYERS ├──────────────────────────────────────────┐
-
 #define SPCLWR LT(_LOWER, KC_SPC)
 #define SPCRSE LT(_RAISE, KC_SPC)
 
-#define ADJUST MO(_ADJUST)
+#define SFT_Z LSFT_T(KC_Z)
+#define SFT_SLSH RSFT_T(KC_SLSH)
 
-// LEFT HAND HOME ROW MODS QWERTY ├──────────────────┐
+#define LCTL_A LCTL_T(KC_A)
 
-#define GUI_A MT(MOD_LGUI, KC_A)
-#define ALT_S MT(MOD_LALT, KC_S)
-#define CTL_D MT(MOD_LCTL, KC_D)
-#define SHT_F MT(MOD_LSFT, KC_F)
+// ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
+// │ C O M B O S                                                                                                            │
+// └────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┘
+// ▝▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▘
 
-// RIGHT HAND HOME ROW MODS QWERTY ├─────────────────┐
+enum combo_events {
+  COMBO_BSLASH,
+  COMBO_QUOT,
+  COMBO_ESC,
+  COMBO_TAB,
+  COMBO_TAB_HOME,
+  COMBO_GRV,
+};
 
-#define SHT_J MT(MOD_RSFT, KC_J)
-#define CTL_K MT(MOD_LCTL, KC_K)
-#define ALT_L MT(MOD_LALT, KC_L)
-#define GUI_S MT(MOD_LGUI, KC_SCLN)
+#ifdef COMBO_ENABLE
+
+const uint16_t PROGMEM combo_bslash[] = {KC_O, KC_P, COMBO_END};
+const uint16_t PROGMEM combo_quot[] = {KC_L, KC_SCLN, COMBO_END};
+const uint16_t PROGMEM combo_tab[] = {KC_Q, KC_W, COMBO_END};
+const uint16_t PROGMEM combo_tab_home[] = {KC_F, KC_D, COMBO_END};
+const uint16_t PROGMEM combo_esc[] = {KC_J, KC_K, COMBO_END};
+const uint16_t PROGMEM combo_grv[] = {KC_1, KC_2, COMBO_END};
+
+#define COMBO_COUNT 6
+combo_t key_combos[COMBO_COUNT] = {
+  [COMBO_BSLASH] =      COMBO(combo_bslash, KC_BACKSLASH),
+  [COMBO_QUOT] =        COMBO(combo_quot, KC_QUOT),
+  [COMBO_ESC] =         COMBO(combo_esc, KC_ESC),
+  [COMBO_TAB] =         COMBO(combo_tab, KC_TAB),
+  [COMBO_TAB_HOME] =    COMBO(combo_tab_home, KC_TAB),
+  [COMBO_GRV] =         COMBO(combo_grv, KC_GRV),
+};
+
+uint16_t get_combo_term(uint16_t index, combo_t *combo) {
+  switch (index) {
+    case COMBO_ESC:
+    case COMBO_TAB_HOME:
+      return 150;
+    default:
+      return COMBO_TERM;
+  }
+}
+
+#endif
 
 
 // ┌────────────────────────────────────────────────────────────────────────────────────────────────────────────────────────┐
@@ -83,8 +115,8 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
    [_QWERTY] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
               KC_Q,     KC_W,     KC_E,     KC_R,     KC_T,      KC_Y,     KC_U,     KC_I,     KC_O,     KC_P,  
-              GUI_A,    ALT_S,    CTL_D,    SHT_F,    KC_G,      KC_H,     SHT_J,    CTL_K,    ALT_L,    GUI_S,    
-KC_LCTL,  LSFT_T(KC_Z),     KC_X,     KC_C,     KC_V,     KC_B,      KC_N,     KC_M,     KC_COMM,  KC_DOT,   RSFT_T(KC_SLSH),  RSFT_T(KC_ENT),
+              LCTL_A,   KC_S,     KC_D,     KC_F,     KC_G,      KC_H,     KC_J,     KC_K,     KC_L,     KC_SCLN,    
+    LCTL_A,   SFT_Z,    KC_X,     KC_C,     KC_V,     KC_B,      KC_N,     KC_M,     KC_COMM,  KC_DOT,   SFT_SLSH,  RSFT_T(KC_ENT),
                                   KC_LALT,  KC_LGUI,  SPCLWR,    SPCRSE,   KC_RGUI,  KC_RALT
  ),
 
@@ -106,9 +138,9 @@ KC_LCTL,  LSFT_T(KC_Z),     KC_X,     KC_C,     KC_V,     KC_B,      KC_N,     K
 
    [_LOWER] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
-              KC_CAPS,  KC_NUM,   KC_UP,    KC_EQL,   KC_LCBR,   KC_RCBR,  KC_P7,    KC_P8,    KC_P9,    KC_PPLS,
-              KC_QUOT,  KC_LEFT,  KC_DOWN,  KC_RGHT,  KC_LBRC,   KC_RBRC,  KC_P4,    KC_P5,    KC_P6,    KC_MINS,  
-     XXXXXXX, KC_END,   KC_PGUP,  C(KC_S),  KC_PGDN,  KC_LPRN,   KC_RPRN,  KC_P1,    KC_P2,    KC_P3,    KC_PAST,  _______,
+              KC_1,     KC_2,     KC_3,     KC_4,     KC_5,      KC_6,     KC_7,     KC_8,     KC_9,     KC_0,
+              KC_TAB,   _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______,
+    _______,  _______,  _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______,   _______,
                                   _______,  _______,  _______,   _______,  _______,  _______
  ),
  /*
@@ -130,10 +162,10 @@ KC_LCTL,  LSFT_T(KC_Z),     KC_X,     KC_C,     KC_V,     KC_B,      KC_N,     K
 
    [_RAISE] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
-                     _______, _______, _______, _______, _______, _______, _______, _______, _______, QK_BOOT,
-              _______,  _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  KC_BSPC,
-    XXXXXXX, LSFT(KC_GRV),KC_TILD, RALT(KC_C),XXXXXXX,  XXXXXXX,   XXXXXXX,  XXXXXXX,  XXXXXXX,  DM_REC1,  DM_RSTP,  _______, 
-                                 _______,   _______,   _______,   _______,  _______,  _______
+              _______,  _______,  _______,  _______,  _______,   _______,  KC_MINS,  KC_EQL,   KC_LBRC,   KC_RBRC,
+              _______,  _______,  _______,  _______,  _______,   KC_LEFT,  KC_DOWN,  KC_UP,    KC_RIGHT,  KC_BSPC,
+    _______,  _______,  _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______,   _______,
+                                  _______,  _______,  _______,   _______,  _______,  _______
  ),
  /*
    ╺━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━╸
@@ -153,9 +185,9 @@ KC_LCTL,  LSFT_T(KC_Z),     KC_X,     KC_C,     KC_V,     KC_B,      KC_N,     K
 
    [_ADJUST] = LAYOUT(
  //╷         ╷         ╷         ╷         ╷         ╷         ╷╷         ╷         ╷         ╷         ╷         ╷         ╷
-              QK_BOOT,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,   XXXXXXX,  KC_F7,    KC_F8,    KC_F9,    KC_F12,   
-              DB_TOGG,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,   XXXXXXX,  KC_F4,    KC_F5,    KC_F6,    KC_F11,
-    XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,  XXXXXXX,   XXXXXXX,  KC_F1,    KC_F2,    KC_F3,    KC_F10,   KC_F13,
+              QK_BOOT,  _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______,   
+              DB_TOGG,  _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______,
+    _______,  _______,  _______,  _______,  _______,  _______,   _______,  _______,  _______,  _______,  _______,   _______,
                                   _______,  _______,  _______,   _______,  _______,  _______  
  )
 /*
